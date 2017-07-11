@@ -12,21 +12,27 @@ app.get("/burgers", function(req, res){
 });
 
 //POST method for adding another burger
-app.post("/burgers", function(req, res){
+app.post("/burgers/create", function(req, res){
 	db.burger.create({
 		burger_name: req.body.params,
-		//devoured: false
 	}).then(function(dbBurger){
 		res.json(dbBurger);
 	});
 });
 
-//PUT method for updating burgers and making sure that
-app.put("/burgers", function(req, res){
+//PUT method for updating burgers to devoured
+app.put("/burgers/update", function(req, res){
 	db.burger.update({
 		devoured: true
-	})
-})
+	}, {
+		where: {
+			id: req.body.id
+		}
+	}).then(function(dbBurger){
+		res.json(dbBurger);
+	});
+  });
+};
 
 
 
